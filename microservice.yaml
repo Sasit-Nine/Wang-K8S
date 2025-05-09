@@ -271,4 +271,40 @@ spec:
   ports:
   - protocol: TCP
     port: 3002      
-    targetPort: 3002    
+    targetPort: 3002
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-picking
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-picking
+  template:
+    metadata:
+      labels:
+        app: order-picking
+    spec:
+      containers:
+      - name: order-picking
+        image: sasit48/order-picking-service
+        ports:
+        - containerPort: 3003
+        envFrom:
+        - secretRef:
+            name: service-order-picking-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-picking-service
+spec:
+  selector:
+    app: order-picking
+  ports:
+  - protocol: TCP
+    port: 3003
+    targetPort: 3003
+    
