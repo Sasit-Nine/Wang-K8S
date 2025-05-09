@@ -237,3 +237,38 @@ spec:
   - protocol: TCP
     port: 3001      
     targetPort: 3001    
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: invoice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: invoice
+  template:
+    metadata:
+      labels:
+        app: invoice
+    spec:
+      containers:
+      - name: invoice
+        image: sasit48/invoice-service
+        ports:
+        - containerPort: 3002
+        envFrom:
+        - secretRef:
+            name: service-invoice-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: invoice-service
+spec:
+  selector:
+    app: invoice
+  ports:
+  - protocol: TCP
+    port: 3002      
+    targetPort: 3002    
