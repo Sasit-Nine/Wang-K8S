@@ -222,6 +222,9 @@ spec:
         image: sasit48/auth-service
         ports:
         - containerPort: 3001
+        envFrom:
+        - secretRef:
+            name: service-auth-secret
 ---
 apiVersion: v1
 kind: Service
