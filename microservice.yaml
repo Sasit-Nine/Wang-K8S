@@ -1,0 +1,158 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-mysql
+  template:
+    metadata:
+      labels:
+        app: auth-mysql 
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:8.0
+        ports:
+        - containerPort: 3306
+          name: mysql
+        envFrom:
+        - secretRef:
+            name: mysql-auth-secret
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim-auth
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-mysql-service
+spec:
+  selector:
+    app: auth-mysql
+  ports:
+  - protocol: TCP
+    port: 3306
+    targetPort: 3306
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim-auth
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-invoice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: invoice-mysql
+  template:
+    metadata:
+      labels:
+        app: invoice-mysql 
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:8.0
+        ports:
+        - containerPort: 3306
+          name: mysql
+        envFrom:
+        - secretRef:
+            name: mysql-invoice-secret
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim-invoice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: invoice-mysql-service
+spec:
+  selector:
+    app: invoice-mysql
+  ports:
+  - protocol: TCP
+    port: 3307
+    targetPort: 3306
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim-invoice
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-order-picking
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-picking-mysql
+  template:
+    metadata:
+      labels:
+        app: order-picking-mysql 
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:8.0
+        ports:
+        - containerPort: 3306
+          name: mysql
+        envFrom:
+        - secretRef:
+            name: mysql-order-picking-secret
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim-order-picking
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-picking-mysql-service
+spec:
+  selector:
+    app: order-picking-mysql
+  ports:
+  - protocol: TCP
+    port: 3308
+    targetPort: 3306
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim-order-picking
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
