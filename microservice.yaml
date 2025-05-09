@@ -206,19 +206,19 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: order-picking
+  name: auth
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: order-picking
+      app: auth
   template:
     metadata:
       labels:
-        app: order-picking
+        app: auth
     spec:
       containers:
-      - name: order-picking
+      - name: auth
         image: sasit48/auth-service
         ports:
         - containerPort: 3001
@@ -226,10 +226,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: order-picking-service
+  name: auth-service
 spec:
   selector:
-    app: order-picking
+    app: auth
   ports:
   - protocol: TCP
     port: 3001      
