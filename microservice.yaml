@@ -356,8 +356,9 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: localhost
+  - host: wang.ballx86.com
     http:
+      paths:
       - path: /
         pathType: Prefix
         backend:
@@ -365,4 +366,4 @@ spec:
             name: ui-service
             port: 
               number: 80
-    
+      
