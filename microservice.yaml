@@ -346,6 +346,7 @@ kind: Ingress
 metadata:
   name: ui-ingress
   annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/proxy-read-timeout: "5000"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "5000"
     nginx.ingress.kubernetes.io/use-regex: "true"
@@ -354,6 +355,10 @@ metadata:
     nginx.ingress.kubernetes.io/enable-websocket: "true"
 spec:
   ingressClassName: nginx
+  tls:
+    - hosts:
+        - wang.ballx86.com
+      secretName: wang-ballx86-com-tls
   rules:
   - host: wang.ballx86.com
     http:
