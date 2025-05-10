@@ -351,6 +351,7 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/proxy-buffer-size: "32k" 
     nginx.ingress.kubernetes.io/proxy-buffers: "4 32k"
+    nginx.ingress.kubernetes.io/enable-websocket: "true"
 spec:
   ingressClassName: nginx
   rules:
