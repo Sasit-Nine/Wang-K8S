@@ -391,7 +391,7 @@ spec:
             name: order-picking-service
             port:
               number: 3003
-      - path: /picking
+      - path: /socket/picking
         pathType: Prefix
         backend:
           service:
