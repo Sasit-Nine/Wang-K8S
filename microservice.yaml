@@ -352,7 +352,8 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/proxy-buffer-size: "32k" 
     nginx.ingress.kubernetes.io/proxy-buffers: "4 32k"
-    nginx.ingress.kubernetes.io/enable-websocket: "true"
+    nginx.ingress.kubernetes.io/proxy-http-version: "1.1"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "600"
 spec:
   ingressClassName: nginx
   tls:
@@ -363,13 +364,13 @@ spec:
   - host: wang.ballx86.com
     http:
       paths:
-      - path: /
+      - path: /socket/picking/listorder
         pathType: Prefix
         backend:
           service:
-            name: ui-service
-            port: 
-              number: 80
+            name: order-picking-service
+            port:
+              number: 3003
       - path: /api/auth
         pathType: Prefix
         backend:
@@ -391,20 +392,4 @@ spec:
             name: order-picking-service
             port:
               number: 3003
-      - path: /picking
-        pathType: Prefix
-        backend:
-          service:
-            name: order-picking-service
-            port:
-              number: 3003
-      - path: /invoice
-        pathType: Prefix
-        backend:
-          service:
-            name: invoice-service
-            port:
-              number: 3002
-
-
 
