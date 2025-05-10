@@ -385,6 +385,20 @@ spec:
             name: order-picking-service
             port:
               number: 3003
+      - path: /picking
+        pathType: Prefix
+        backend:
+          service:
+            name: order-picking-service
+            port:
+              number: 3003
+      - path: /invoice
+        pathType: Prefix
+        backend:
+          service:
+            name: invoice-service
+            port:
+              number: 3002
 
 
 
