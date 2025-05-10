@@ -367,8 +367,8 @@ spec:
             name: ui-service
             port: 
               number: 80
-      - path: /auth-service(/|$)(.*)
-        pathType: ImplementationSpecific
+      - path: /api/auth
+        pathType: Prefix
         backend:
           service:
             name: auth-service
