@@ -367,12 +367,13 @@ spec:
             name: ui-service
             port: 
               number: 80
-      - path: /api/auth
-        pathType: Prefix
+      - path: /auth-service(/|$)(.*)
+        pathType: ImplementationSpecific
         backend:
           service:
             name: auth-service
-            port: 
+            port:
               number: 3001
+
 
 
