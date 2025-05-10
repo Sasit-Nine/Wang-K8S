@@ -330,6 +330,7 @@ spec:
         envFrom:
         - secretRef:
             name: service-frontend-secret
+        imagePullPolicy: Always
 ---
 apiVersion: v1
 kind: Service
