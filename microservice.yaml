@@ -327,9 +327,6 @@ spec:
         image: sasit48/frontend-service
         ports:
         - containerPort: 80
-        envFrom:
-        - secretRef:
-            name: service-frontend-secret
         imagePullPolicy: Always
 ---
 apiVersion: v1
